@@ -1,0 +1,3 @@
+[submodule "archiveinterface"]
+	path = archiveinterface
+	url = git@github.com:EMSL-MSC/pacifica-archiveinterface.git
