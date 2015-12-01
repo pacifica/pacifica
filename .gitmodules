@@ -1,3 +1,6 @@
 [submodule "archiveinterface"]
 	path = archiveinterface
 	url = git@github.com:EMSL-MSC/pacifica-archiveinterface.git
+[submodule "uploader"]
+	path = uploader
+	url = git@github.com:EMSL-MSC/pacifica-uploader.git
