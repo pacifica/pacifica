@@ -4,3 +4,6 @@
 [submodule "uploader"]
 	path = uploader
 	url = git@github.com:EMSL-MSC/pacifica-uploader.git
+[submodule "cartd"]
+	path = cartd
+	url = git@github.com:EMSL-MSC/pacifica-cartd.git
