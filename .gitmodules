@@ -7,3 +7,6 @@
 [submodule "cartd"]
 	path = cartd
 	url = git@github.com:EMSL-MSC/pacifica-cartd.git
+[submodule "ingest"]
+	path = ingest
+	url = git@github.com:EMSL-MSC/pacifica-ingest.git
