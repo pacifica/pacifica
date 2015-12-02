@@ -10,3 +10,6 @@
 [submodule "ingest"]
 	path = ingest
 	url = git@github.com:EMSL-MSC/pacifica-ingest.git
+[submodule "docs"]
+	path = docs
+	url = git@github.com:EMSL-MSC/pacifica-docs.git
