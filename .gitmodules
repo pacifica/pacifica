@@ -13,3 +13,6 @@
 [submodule "docs"]
 	path = docs
 	url = git@github.com:EMSL-MSC/pacifica-docs.git
+[submodule "metadata"]
+	path = metadata
+	url = git@github.com:EMSL-MSC/pacifica-metadata.git
