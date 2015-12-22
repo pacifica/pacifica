@@ -16,3 +16,9 @@
 [submodule "metadata"]
 	path = metadata
 	url = git@github.com:EMSL-MSC/pacifica-metadata.git
+[submodule "upload-status"]
+	path = upload-status
+	url = git@github.com:EMSL-MSC/pacifica-upload-status.git
+[submodule "reporting"]
+	path = reporting
+	url = git@github.com:EMSL-MSC/pacifica-reporting.git
