@@ -22,3 +22,6 @@
 [submodule "reporting"]
 	path = reporting
 	url = git@github.com:EMSL-MSC/pacifica-reporting.git
+[submodule "uniqueid"]
+	path = uniqueid
+	url = git@github.com:EMSL-MSC/pacifica-uniqueid.git
