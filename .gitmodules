@@ -25,3 +25,6 @@
 [submodule "uniqueid"]
 	path = uniqueid
 	url = git@github.com:EMSL-MSC/pacifica-uniqueid.git
+[submodule "webresources"]
+	path = webresources
+	url = git@github.com:EMSL-MSC/pacifica-webresources.git
