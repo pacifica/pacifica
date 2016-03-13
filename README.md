@@ -23,3 +23,16 @@ want.
  - Cart - Data cart for requesting data to be bundled and be made
    available for download later.
 
+## Code Standards and Architectures
+
+Coding standards are enforced by Travis-CI. They will be checked and
+commented on by merge requests.
+
+Architectures are talked about in detail in the ```docs``` submodule.
+However, there are two basic types of tools, Python REST services and
+PHP/JavaScript Websites.
+
+## Contributing
+
+Contributing is pretty basic, fork it on github and create a merge
+request.
