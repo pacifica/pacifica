@@ -35,4 +35,4 @@ PHP/JavaScript Websites.
 ## Contributing
 
 Contributing is pretty basic, fork it on github and create a merge
-request. Further reading is done (here)[https://help.github.com/articles/using-pull-requests/]
+request. Further reading is done [here](https://help.github.com/articles/using-pull-requests/)
