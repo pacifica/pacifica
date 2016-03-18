@@ -28,3 +28,6 @@
 [submodule "webresources"]
 	path = webresources
 	url = git@github.com:EMSL-MSC/pacifica-webresources.git
+[submodule "websystem"]
+	path = websystem
+	url = git@github.com:bcit-ci/CodeIgniter.git
