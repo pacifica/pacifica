@@ -31,3 +31,6 @@
 [submodule "websystem"]
 	path = websystem
 	url = git@github.com:bcit-ci/CodeIgniter.git
+[submodule "policy"]
+	path = policy
+	url = git@github.com:EMSL-MSC/pacifica-policy.git
