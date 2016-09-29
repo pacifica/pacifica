@@ -56,7 +56,7 @@ archiveinterface:
     - /srv/archivedata:/srv
 
 cartbackend:
-  image pacifica/cartd-backend
+  image: pacifica/cartd-backend
   container_name: cartbackend
   links:
     - rabbit:amqp
