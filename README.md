@@ -32,8 +32,8 @@ want.
 Docker compose is used heavily to deploy developer environments for
 interacting with the services one at a time. The primary
 `docker-compose.yml` in this repository pulls images from
-[docker hub](http://hub.docker.com) and creates all the services and
-dependencies.
+[docker hub](https://hub.docker.com/u/pacifica/dashboard) and creates
+all the services and dependencies.
 
 ## Code Standards and Architectures
 
