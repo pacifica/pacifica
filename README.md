@@ -18,15 +18,30 @@ want.
    of data coming in from generators.
  - Archive Interface - This is the Pacifica interface to the archive
    supports data on disk or tape.
+ - Policy - This defines the policy code that sites might customize
+   to change behavior of the other services.
+ - UniqueID - This defines the unique identifiers used in the rest
+   of the services (ingest and cart)
  - Searching - Dynamic search capabilities with an emphasis on data
    discovery.
  - Cart - Data cart for requesting data to be bundled and be made
    available for download later.
 
+## Docker Compose Environment
+
+Docker compose is used heavily to deploy developer environments for
+interacting with the services one at a time. The primary
+`docker-compose.yml` in this repository pulls images from
+[docker hub](http://hub.docker.com) and creates all the services and
+dependencies.
+
 ## Code Standards and Architectures
 
 Coding standards are enforced by Travis-CI. They will be checked and
 commented on by merge requests.
+
+[Code Climate](https://www.codeclimate.com) is used to inform on code
+coverage and potential issues through static code analysis.
 
 Architectures are talked about in detail in the ```docs``` submodule.
 However, there are two basic types of tools, Python REST services and
