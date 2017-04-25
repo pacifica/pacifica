@@ -19,3 +19,6 @@
 [submodule "uniqueid"]
 	path = uniqueid
 	url = git@github.com:pacifica/pacifica-uniqueid.git
+[submodule "proxy"]
+	path = proxy
+	url = git@github.com:pacifica/pacifica-proxy.git
