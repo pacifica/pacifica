@@ -6,6 +6,8 @@ git:
   submodules: false
 before_install:
  - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+ - git submodule update --init
+ - sed -i 's/git@github.com:/https:\/\/github.com\//' docs/.gitmodules
  - git submodule update --init --recursive
 install: pip install -r docs/requirements.txt
 script: PACIFICA_ROOT=$PWD make -C docs/sphinx html
