@@ -1,6 +1,9 @@
 # Pacifica Core Services
-=============
-Pacifica Data Management System for Scientific Data Archive.
+Pacifica is an open source scientific data management platform for 
+harvesting, validating, and distributing data and metadata. It is
+architected as a flexible set of inter-changeable tools used to build
+custom scientific data management solutions to meet the diverse
+changing demands of research at different institutions.
 
 ## Core Services
 
