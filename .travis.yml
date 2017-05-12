@@ -7,6 +7,5 @@ git:
 before_install:
  - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
  - git submodule update --init
- - git submodule sync
-install: pip install -r docs/requirements-dev.txt
+install: pip install -r docs/requirements.txt
 script: make -C docs/sphinx html
