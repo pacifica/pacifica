@@ -1,4 +1,5 @@
 # Pacifica Core Services
+[![Build Status](https://travis-ci.org/pacifica/pacifica.svg?branch=master)](https://travis-ci.org/pacifica/pacifica)
 Pacifica is an open source scientific data management platform for 
 harvesting, validating, and distributing data and metadata. It is
 architected as a flexible set of inter-changeable tools used to build
