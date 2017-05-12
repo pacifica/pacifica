@@ -8,4 +8,4 @@ before_install:
  - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
  - git submodule update --init
 install: pip install -r docs/requirements.txt
-script: make -C docs/sphinx html
+script: PACIFICA_ROOT=$PWD make -C docs/sphinx html
