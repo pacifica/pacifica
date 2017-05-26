@@ -20,5 +20,12 @@ before_install:
  - sudo service postgresql stop
  - docker-compose up -d metadataserver
  - cp metadata/server.conf archiveinterface/config.cfg docs/sphinx/
-install: pip install -r docs/requirements.txt
+install:
+ - pip install -r docs/requirements.txt
+ - pip install -r metadata/requirements.txt
+ - pip install -r policy/requirements.txt
+ - pip install -r cartd/requirements.txt
+ - pip install -r ingest/requirements.txt
+ - pip install -r uniqueid/requirements.txt
+ - pip install -r proxy/requirements.txt
 script: PACIFICA_ROOT=$PWD make -C docs/sphinx html
