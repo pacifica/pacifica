@@ -138,7 +138,7 @@ metadataserver:
     - metadatadb:postgres
     - elasticdb:elasticdb
   ports:
-    - 8121:8080
+    - 8121:8121
 
 policyserver:
   image: pacifica/policy
