@@ -9,9 +9,9 @@ env:
 git:
   submodules: false
 before_install:
-- mkdir -p ~\/.ssh
-- openssl aes-256-cbc -K $encrypted_94560f44e912_key -iv $encrypted_94560f44e912_iv
-  -in deploy-key.enc -out ~\/.ssh/deploy-key -d
+- mkdir -p ~/.ssh
+- echo $GITHUB_DEPLOY_KEY > ~/.ssh/id_rsa
+- chmod og-rwx ~/.ssh/id_rsa
 - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
 - git submodule update --init
 - sed -i 's/git@github.com:/https:\/\/github.com\//' docs/.gitmodules
