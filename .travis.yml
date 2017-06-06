@@ -1,0 +1,34 @@
+language: python
+sudo: required
+services:
+- docker
+python:
+- 2.7
+env:
+  DOCKER_COMPOSE_VERSION: 1.9.0
+git:
+  submodules: false
+before_install:
+- mkdir -p ~/.ssh
+- echo $GITHUB_DEPLOY_KEY > ~/.ssh/id_rsa
+- chmod og-rwx ~/.ssh/id_rsa
+- sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+- git submodule update --init
+- sed -i 's/git@github.com:/https:\/\/github.com\//' docs/.gitmodules
+- git submodule update --init --recursive
+- sudo rm -f /usr/local/bin/docker-compose
+- sudo curl -L -o /usr/local/bin/docker-compose https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname
+  -s)-$(uname -m)
+- sudo chmod +x /usr/local/bin/docker-compose
+- sudo service postgresql stop
+- docker-compose up -d metadataserver
+- cp metadata/server.conf archiveinterface/config.cfg docs/sphinx/
+install:
+- pip install -r docs/requirements.txt
+- pip install -r metadata/requirements.txt
+- pip install -r policy/requirements.txt
+- pip install -r cartd/requirements.txt
+- pip install -r ingest/requirements.txt
+- pip install -r uniqueid/requirements.txt
+- pip install -r proxy/requirements.txt
+script: PACIFICA_ROOT=$PWD make -C docs/sphinx html
