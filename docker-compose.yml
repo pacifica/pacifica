@@ -175,3 +175,14 @@ services:
         POLICY_SERVER: policyserver
         METADATA_SERVER: metadataserver
         ARCHIVEINTERFACE_SERVER: archiveinterface
+
+    proxyserver:
+      image: pacifica/proxy
+      links:
+        - metadataserver:metadata
+        - archivei:archiveinterface
+      ports:
+        - 8180:8180
+      environment:
+        METADATA_PORT: tcp://metadata:8121
+        ARCHIVEI_PORT: tcp://archiveinterface:8080
