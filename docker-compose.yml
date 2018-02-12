@@ -179,10 +179,10 @@ services:
     proxyserver:
       image: pacifica/proxy
       links:
-        - metadataserver:metadata
-        - archivei:archiveinterface
+        - metadataserver
+        - archiveinterface
       ports:
         - 8180:8180
       environment:
-        METADATA_PORT: tcp://metadata:8121
+        METADATA_PORT: tcp://metadataserver:8121
         ARCHIVEI_PORT: tcp://archiveinterface:8080
