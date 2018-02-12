@@ -1,169 +1,177 @@
-rabbit:
-  image: rabbitmq
-  container_name: rabbit
+---
+version: "3.2"
+volumes:
+    archivedata:
+    cartshared:
+    ingestshared:
 
-cartmysql:
-  image: mysql
-  container_name: cartmysql
-  environment:
-    MYSQL_ROOT_PASSWORD: root
-    MYSQL_DATABASE: pacifica_cart
-    MYSQL_USER: cartd
-    MYSQL_PASSWORD: cartd
+services:
+    ingestrabbit:
+      image: rabbitmq
+    cartrabbit:
+      image: rabbitmq
 
-ingestmysql:
-  image: mysql
-  container_name: ingestmysql
-  environment:
-    MYSQL_ROOT_PASSWORD: root
-    MYSQL_DATABASE: pacifica_ingest
-    MYSQL_USER: ingest
-    MYSQL_PASSWORD: ingest
+    cartmysql:
+      image: mysql
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: pacifica_cart
+        MYSQL_USER: cartd
+        MYSQL_PASSWORD: cartd
 
-reportingmysql:
-  image: mysql
-  container_name: reportingmysql
-  environment:
-    MYSQL_ROOT_PASSWORD: root
-    MYSQL_DATABASE: pacifica_reporting
-    MYSQL_USER: reporting
-    MYSQL_PASSWORD: reporting
+    ingestmysql:
+      image: mysql
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: pacifica_ingest
+        MYSQL_USER: ingest
+        MYSQL_PASSWORD: ingest
 
-statusmysql:
-  image: mysql
-  container_name: statusmysql
-  environment:
-    MYSQL_ROOT_PASSWORD: root
-    MYSQL_DATABASE: pacifica_status
-    MYSQL_USER: status
-    MYSQL_PASSWORD: status
+    uniqueidmysql:
+      image: mysql
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: pacifica_uniqueid
+        MYSQL_USER: uniqueid
+        MYSQL_PASSWORD: uniqueid
 
-uniqueidmysql:
-  image: mysql
-  container_name: uniqueidmysql
-  environment:
-    MYSQL_ROOT_PASSWORD: root
-    MYSQL_DATABASE: pacifica_uniqueid
-    MYSQL_USER: uniqueid
-    MYSQL_PASSWORD: uniqueid
+    metadatadb:
+      image: postgres
+      environment:
+        POSTGRES_PASSWORD: pacifica
+        POSTGRES_DB: pacifica_metadata
+        POSTGRES_USER: pacifica
 
-archiveinterface:
-  image: pacifica/archiveinterface
-  container_name: archiveinterface
-  ports:
-    - 8080:8080
-  volumes:
-    - /srv/archivedata:/srv
+    elasticdb:
+      image: docker.elastic.co/elasticsearch/elasticsearch:5.6.5
+      environment:
+        - bootstrap.memory_lock=true
+        - xpack.security.enabled=false
+        - xpack.monitoring.enabled=false
+        - xpack.watcher.enabled=false
+        - http.cors.enabled=true
+        - "http.cors.allow-origin=\"/.*/\""
+        - "http.cors.allow-methods=OPTIONS, HEAD, GET, POST, PUT, DELETE"
+        - "http.cors.allow-headers=\"X-Requested-With,X-Auth-Token,Content-Type, Content-Length, Authorization\""
+        - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      ulimits:
+        memlock:
+          soft: -1
+          hard: -1
+      ports:
+        - 9200:9200
+        - 9300:9300
 
-cartbackend:
-  image: pacifica/cartd-backend
-  container_name: cartbackend
-  links:
-    - rabbit:amqp
-    - cartmysql:mysql
-    - archiveinterface:archivei
-  volumes:
-    - /srv/cartshared:/shared
-  environment:
-    VOLUME_PATH: /shared/
-    LRU_BUFFER_TIME: 0
+    archiveinterface:
+      image: pacifica/archiveinterface
+      ports:
+        - 8080:8080
+      volumes:
+        - archivedata:/srv
 
-cartfrontend:
-  image: pacifica/cartd-frontend
-  container_name: cartfrontend
-  ports:
-    - 8081:8081
-  links:
-    - rabbit:amqp
-    - cartmysql:mysql
-    - archiveinterface:archivei
-  volumes:
-    - /srv/cartshared:/shared
-  environment:
-    VOLUME_PATH: /shared/
-    LRU_BUFFER_TIME: 0
+    cartbackend:
+      image: pacifica/cartd-backend
+      links:
+        - cartrabbit
+        - cartmysql
+        - archiveinterface
+      volumes:
+        - cartshared:/shared
+      environment:
+        VOLUME_PATH: /shared/
+        LRU_BUFFER_TIME: 0
+        ARCHIVEI_PORT_8080_TCP_ADDR: archiveinterface
+        AMQP_PORT_5672_TCP_ADDR: cartrabbit
+        MYSQL_PORT_3306_TCP_ADDR: cartmysql
 
-uniqueid:
-  image: pacifica/uniqueid
-  container_name: uniqueid
-  links:
-    - uniqueidmysql:mysql
-  ports:
-    - 8051:8051
+    cartfrontend:
+      image: pacifica/cartd-frontend
+      ports:
+        - 8081:8081
+      links:
+        - cartrabbit
+        - cartmysql
+        - archiveinterface
+      volumes:
+        - cartshared:/shared
+      environment:
+        VOLUME_PATH: /shared/
+        LRU_BUFFER_TIME: 0
+        ARCHIVEI_PORT_8080_TCP_ADDR: archiveinterface
+        AMQP_PORT_5672_TCP_ADDR: cartrabbit
+        MYSQL_PORT_3306_TCP_ADDR: cartmysql
 
-ingestbackend:
-  image: pacifica/ingest-backend
-  container_name: ingestbackend
-  links:
-    - rabbit:amqp
-    - ingestmysql:mysql
-    - archiveinterface:archivei
-    - uniqueid:uniqueid
-  volumes:
-    - /srv/ingestshared:/shared
+    uniqueid:
+      image: pacifica/uniqueid
+      links:
+        - uniqueidmysql
+      ports:
+        - 8051:8051
+      environment:
+        MYSQL_PORT_3306_TCP_ADDR: uniqueidmysql
 
-ingestfrontend:
-  image: pacifica/ingest-frontend
-  container_name: ingestfrontend
-  ports:
-    - 8066:8066
-  links:
-    - rabbit:amqp
-    - ingestmysql:mysql
-    - archiveinterface:archivei
-  volumes:
-    - /srv/ingestshared:/shared
+    metadataserver:
+      image: pacifica/metadata
+      links:
+        - metadatadb
+        - elasticdb
+      ports:
+        - 8121:8121
+      environment:
+        ELASTICDB_PORT: tcp://elasticdb:9200
+        POSTGRES_ENV_POSTGRES_DB: pacifica_metadata
+        POSTGRES_ENV_POSTGRES_USER: pacifica
+        POSTGRES_PORT_5432_TCP_ADDR: metadatadb
+        POSTGRES_PORT_5432_TCP_PORT: 5432
+        POSTGRES_ENV_POSTGRES_PASSWORD: pacifica
 
-elasticdb:
-  image: elasticsearch
-  container_name: elasticdb
-  ports:
-    - 9200:9200
-    - 9300:9300
+    policyserver:
+      image: pacifica/policy
+      links:
+        - metadataserver
+      ports:
+        - 8181:8181
+      environment:
+        METADATA_PORT: tcp://metadataserver:8121
 
-metadatadb:
-  image: postgres
-  container_name: metadatadb
-  environment:
-    POSTGRES_PASSWORD: password
-    POSTGRES_DB: pacifica_metadata
-    POSTGRES_USER: metadata
-  ports:
-    - 5432:5432
+    ingestbackend:
+      image: pacifica/ingest-backend
+      links:
+        - ingestrabbit
+        - ingestmysql
+        - archiveinterface
+        - uniqueid
+        - policyserver
+        - metadataserver
+      volumes:
+        - ingestshared:/shared
+      environment:
+        VOLUME_PATH: /shared
+        MYSQL_PORT_3306_TCP_ADDR: ingestmysql
+        BROKER_SERVER: ingestrabbit
+        UNIQUEID_SERVER: uniqueid
+        POLICY_SERVER: policyserver
+        METADATA_SERVER: metadataserver
+        ARCHIVEINTERFACE_SERVER: archiveinterface
 
-metadataserver:
-  image: pacifica/metadata
-  container_name: metadataserver
-  links:
-    - metadatadb:postgres
-    - elasticdb:elasticdb
-  ports:
-    - 8121:8121
-
-policyserver:
-  image: pacifica/policy
-  container_name: policyserver
-  links:
-    - metadataserver:metadata
-  ports:
-    - 8181:8181
-
-reportingserver:
-  image: pacifica/reporting
-  container_name: reportingserver
-  links:
-   - metadataserver:metadata
-   - reportingmysql:mysql
-   - cartfrontend:cart
-  ports:
-   - 8192:80
-
-statusserver:
-  image: pacifica/upload-status
-  container_name: statusserver
-  links:
-   - metadataserver:metadata
-   - statusmysql:mysql
-   - cartfrontend:cart
-  ports:
-   - 8193:80
+    ingestfrontend:
+      image: pacifica/ingest-frontend
+      ports:
+        - 8066:8066
+      links:
+        - ingestrabbit
+        - ingestmysql
+        - archiveinterface
+        - uniqueid
+        - policyserver
+        - metadataserver
+      volumes:
+        - ingestshared:/shared
+      environment:
+        VOLUME_PATH: /shared
+        MYSQL_PORT_3306_TCP_ADDR: ingestmysql
+        BROKER_SERVER: ingestrabbit
+        UNIQUEID_SERVER: uniqueid
+        POLICY_SERVER: policyserver
+        METADATA_SERVER: metadataserver
+        ARCHIVEINTERFACE_SERVER: archiveinterface
