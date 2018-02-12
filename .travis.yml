@@ -5,7 +5,7 @@ services:
 python:
 - 2.7
 env:
-  DOCKER_COMPOSE_VERSION: 1.9.0
+  DOCKER_COMPOSE_VERSION: 1.18.0
 git:
   submodules: false
 before_install:
