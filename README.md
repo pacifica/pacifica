@@ -33,6 +33,9 @@ interacting with the services one at a time. The primary
 [docker hub](https://hub.docker.com/r/pacifica/) and creates
 all the services and dependencies.
 
+For more information about docker compose environment refer to the
+[documentation](DOCKER_COMPOSE.md).
+
 ## Code Standards and Architectures
 
 Coding standards are enforced by Travis-CI. They will be checked and

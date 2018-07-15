@@ -4,6 +4,7 @@ volumes:
     archivedata:
     cartshared:
     ingestshared:
+    pgdata:
 
 services:
     ingestrabbit:
@@ -41,6 +42,8 @@ services:
         POSTGRES_PASSWORD: pacifica
         POSTGRES_DB: pacifica_metadata
         POSTGRES_USER: pacifica
+      volumes:
+        - pgdata:/var/lib/postgresql/data
 
     elasticdb:
       image: docker.elastic.co/elasticsearch/elasticsearch:5.6.9
