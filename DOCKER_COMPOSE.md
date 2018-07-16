@@ -220,7 +220,7 @@ dbus:x:81:
   curl \
   -X POST \
   -H 'Content-Type: application/json' \
-  http://cartserver:8081/example_cart \
+  http://cartfrontend:8081/example_cart \
   -d'{\"fileids\":[{\"id\":\"103\",\"path\":\"a/b/c/foo.txt\",\"hashtype\":\"sha1\",\"hashsum\":\"8692d27afeda98a594d30e8b44bf402f87fb332f\"}]}'
 {"message": "Cart Processing has begun"}
 # docker run \
@@ -229,7 +229,7 @@ dbus:x:81:
   --network=pacifica_default \
   centos:7 \
   curl -I \
-  http://cartserver:8081/example_cart
+  http://cartfrontend:8081/example_cart
 HTTP/1.1 204 No Content
 Content-Type: application/json
 Server: CherryPy/16.0.3
