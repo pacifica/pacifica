@@ -212,7 +212,7 @@ dbus:x:81:
   curl \
   -X POST \
   -H 'Content-Type: application/json' \
-  http://cartserver:8081/example_cart \
+  http://cartfrontend:8081/example_cart \
   -d'{\"fileids\":[{\"id\":\"103\",\"path\":\"a/b/c/foo.txt\",\"hashtype\":\"sha1\",\"hashsum\":\"8692d27afeda98a594d30e8b44bf402f87fb332f\"}]}'
 {"message": "Cart Processing has begun"}
 # docker run \
@@ -221,7 +221,7 @@ dbus:x:81:
   --network=pacifica_default \
   centos:7 \
   curl -I \
-  http://cartserver:8081/example_cart
+  http://cartfrontend:8081/example_cart
 HTTP/1.1 204 No Content
 Content-Type: application/json
 Server: CherryPy/16.0.3
@@ -233,4 +233,37 @@ X-Pacifica-Message:
 
 # The Ingest Interface
 
-
+```
+# docker run \
+  -it \
+  --rm \
+  --network=pacifica_default \
+  -e UPLOAD_URL=http://ingestfrontend:8066/upload \
+  -e STATE_URL=http://ingestfrontend:8066/get_state \
+  -e POLICY_URL=http://policyserver:8181/uploader \
+  -e POLICY_ADDR=policyserver \
+  pacifica/cliuploader \
+  upload \
+  --logon 10 \
+  entrypoint.sh
+...
+...
+...
+Authentication Type (): Setting logon to 10.
+Setting instrument to 54.
+Setting proposal to 1234a.
+Setting user-of-record to 10.
+Setting directory-proposal to 1234a.
+Done 10240.
+Waiting job to complete (5).
+Done.
+{
+    "created": "2018-07-16 04:27:29",
+    "exception": "",
+    "job_id": 1,
+    "state": "OK",
+    "task": "ingest metadata",
+    "task_percent": "100.00000",
+    "updated": "2018-07-16 04:27:31"
+}
+```
