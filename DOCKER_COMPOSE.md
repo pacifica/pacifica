@@ -8,15 +8,27 @@ to inspect the system.
 
 ## Docker Compose Details
 
-The docker compose file defines three volumes. The volumes
+The docker compose file defines five volumes. The volumes
 are usually located on the host in
-`/var/lib/docker/volumes`. The `archivedata` volume
-contains the files in the archive. The `ingestshared`
-volume is the intermediate storage used by the ingest
-services. Data from the uploaders is staged on the
-`ingestshared` volume. The `cartshared` volume is the
-intermediate storage used by the cart service. Data from
-the archive is staged on the `cartshared` volume.
+`/var/lib/docker/volumes`. These volumes define the
+persistent state across reboots of the system. The location
+maybe distribution dependent so check the docker provider
+documentation to be certain.
+
+The `archivedata` volume contains the files in the archive.
+These files will be saved for the life of the volume. This
+does happen across bring up and shutdown of the services.
+
+The `ingestshared` volume is the intermediate storage used
+by the ingest services. Data from the uploaders are staged
+on the `ingestshared` volume.
+
+The `cartshared` volume is the intermediate storage used by
+the cart service. Data from the archive is staged on the
+`cartshared` volume.
+
+The `metadata` and `uniqueiddata` volumes are the 
+persistent metadata databases required by the services.
 
 Each service in docker compose has its external port
 exposed so you can interact with it locally.
