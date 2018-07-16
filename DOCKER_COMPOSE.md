@@ -43,6 +43,19 @@ exposed so you can interact with it locally.
 | 8066 | Ingest Interface   |
 | 8180 | Proxy Interface    |
 
+## Host Requirements
+
+Requirements for the host running the docker server are the
+following.
+
+ * RAM - 8Gb minimum - 16Gb preferred
+ * CPUs - 4 minimum - 8 preferred
+ * DISK - 20Gb minimum - 1Tb preferred
+
+The disk requirement is very dependent on the data sets
+that will be uploaded. Scale that as nessisary for testing
+and development purposes.
+
 ## Bring Up Services
 
 There are two commands to separate the bring up of Pacifica
