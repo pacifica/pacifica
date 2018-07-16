@@ -21,23 +21,15 @@ the archive is staged on the `cartshared` volume.
 Each service in docker compose has its external port
 exposed so you can interact with it locally.
 
-+------+--------------------+
 | Port | Service            |
-+======+====================+
+| ---- | ------------------ |
 | 8080 | Archive Interface  |
-+------+--------------------+
 | 8081 | Cart Interface     |
-+------+--------------------+
 | 8051 | UniqueID Interface |
-+------+--------------------+
 | 8121 | Metadata Interface |
-+------+--------------------+
 | 8181 | Policy Interface   |
-+------+--------------------+
 | 8066 | Ingest Interface   |
-+------+--------------------+
 | 8180 | Proxy Interface    |
-+------+--------------------+
 
 ## Bring Up Services
 
