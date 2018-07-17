@@ -20,8 +20,8 @@ want.
    to change behavior of the other services.
  - UniqueID - This defines the unique identifiers used in the rest
    of the services (ingest and cart)
- - Searching - Dynamic search capabilities with an emphasis on data
-   discovery.
+ - Metadata - This defines the core metadata schema and access to
+   meta in that schema.
  - Cart - Data cart for requesting data to be bundled and be made
    available for download later.
 
@@ -30,8 +30,11 @@ want.
 Docker compose is used heavily to deploy developer environments for
 interacting with the services one at a time. The primary
 `docker-compose.yml` in this repository pulls images from
-[docker hub](https://hub.docker.com/u/pacifica/dashboard) and creates
+[docker hub](https://hub.docker.com/r/pacifica/) and creates
 all the services and dependencies.
+
+For more information about docker compose environment refer to the
+[documentation](DOCKER_COMPOSE.md).
 
 ## Code Standards and Architectures
 

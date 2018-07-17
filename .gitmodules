@@ -22,3 +22,9 @@
 [submodule "proxy"]
 	path = proxy
 	url = git@github.com:pacifica/pacifica-proxy.git
+[submodule "python-uploader"]
+	path = python-uploader
+	url = git@github.com:pacifica/pacifica-python-uploader.git
+[submodule "cli-uploader"]
+	path = cli-uploader
+	url = git@github.com:pacifica/pacifica-cli-uploader.git

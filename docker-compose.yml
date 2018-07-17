@@ -4,6 +4,8 @@ volumes:
     archivedata:
     cartshared:
     ingestshared:
+    metadata:
+    uniqueiddata:
 
 services:
     ingestrabbit:
@@ -34,6 +36,8 @@ services:
         MYSQL_DATABASE: pacifica_uniqueid
         MYSQL_USER: uniqueid
         MYSQL_PASSWORD: uniqueid
+      volumes:
+        - uniqueiddata:/var/lib/mysql
 
     metadatadb:
       image: postgres
@@ -41,9 +45,11 @@ services:
         POSTGRES_PASSWORD: pacifica
         POSTGRES_DB: pacifica_metadata
         POSTGRES_USER: pacifica
+      volumes:
+        - metadata:/var/lib/postgresql/data
 
     elasticdb:
-      image: docker.elastic.co/elasticsearch/elasticsearch:5.6.5
+      image: docker.elastic.co/elasticsearch/elasticsearch:5.6.9
       environment:
         - bootstrap.memory_lock=true
         - xpack.security.enabled=false
