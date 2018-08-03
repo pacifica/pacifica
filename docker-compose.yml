@@ -12,6 +12,8 @@ services:
       image: rabbitmq
     cartrabbit:
       image: rabbitmq
+    notifyrabbit:
+      image: rabbitmq
 
     cartmysql:
       image: mysql
@@ -20,6 +22,14 @@ services:
         MYSQL_DATABASE: pacifica_cart
         MYSQL_USER: cartd
         MYSQL_PASSWORD: cartd
+
+    notifymysql:
+      image: mysql
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: pacifica_notifications
+        MYSQL_USER: notifications
+        MYSQL_PASSWORD: notifications
 
     ingestmysql:
       image: mysql
@@ -121,9 +131,11 @@ services:
       links:
         - metadatadb
         - elasticdb
+        - notifyfrontend
       ports:
         - 8121:8121
       environment:
+        NOTIFICATIONS_URL: http://notifyfrontend:8070/receive
         ELASTICDB_PORT: tcp://elasticdb:9200
         POSTGRES_ENV_POSTGRES_DB: pacifica_metadata
         POSTGRES_ENV_POSTGRES_USER: pacifica
@@ -192,3 +204,23 @@ services:
       environment:
         METADATA_PORT: tcp://metadataserver:8121
         ARCHIVEI_PORT: tcp://archiveinterface:8080
+
+    notifyfrontend:
+      image: pacifica/notifications-frontend
+      links:
+        - notifymysql
+        - notifyrabbit
+      ports:
+        - 8070:8070
+      environment:
+        PEEWEE_ADDR: notifymysql
+        BROKER_URL: pyamqp://guest:guest@notifyrabbit:5672//
+
+    notifybackend:
+      image: pacifica/notifications-backend
+      links:
+        - notifymysql
+        - notifyrabbit
+      environment:
+        PEEWEE_ADDR: notifymysql
+        BROKER_URL: pyamqp://guest:guest@notifyrabbit:5672//
