@@ -24,6 +24,11 @@ want.
    meta in that schema.
  - Cart - Data cart for requesting data to be bundled and be made
    available for download later.
+ - CLI - Command line interface for uploading and downloading data.
+   - Uploader Library - Python library for tools to incorporate to
+     upload data to the Ingest service.
+   - Downloader Library - Python library for tools to incorporate
+     to download data from the Cart service.
 
 ## Docker Compose Environment
 
