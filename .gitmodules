@@ -25,9 +25,15 @@
 [submodule "python-uploader"]
 	path = python-uploader
 	url = git@github.com:pacifica/pacifica-python-uploader.git
-[submodule "cli-uploader"]
-	path = cli-uploader
-	url = git@github.com:pacifica/pacifica-cli-uploader.git
 [submodule "notifications"]
 	path = notifications
 	url = git@github.com:pacifica/pacifica-notifications.git
+[submodule "python-downloader"]
+	path = python-downloader
+	url = git@github.com:pacifica/pacifica-python-downloader.git
+[submodule "cli"]
+	path = cli
+	url = git@github.com:pacifica/pacifica-cli.git
+[submodule "dispatcher"]
+	path = dispatcher
+	url = git@github.com:pacifica/pacifica-dispatcher.git
