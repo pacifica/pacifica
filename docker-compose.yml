@@ -15,6 +15,15 @@ services:
     image: rabbitmq:3.7
   notifyamqp:
     image: rabbitmq:3.7
+  jupyteramqp:
+    image: rabbitmq:3.7
+
+  jupyterdb:
+    image: postgres:9.6
+    environment:
+      POSTGRES_DB: jupyter
+      POSTGRES_USER: jupyter
+      POSTGRES_PASSWORD: jupyter
 
   cartdb:
     image: postgres:9.6
@@ -76,7 +85,7 @@ services:
       - 9300:9300
 
   archiveinterface:
-    image: pacifica/archiveinterface:v0.2.1
+    image: pacifica/archiveinterface:v0.2.3
     ports:
       - 8080:8080
     volumes:
@@ -124,7 +133,7 @@ services:
       PEEWEE_DATABASE_URL: postgres://uniqueid:uniqueid@uniqueiddb/pacifica_uniqueid
 
   metadataserver:
-    image: pacifica/metadata:v0.10.1
+    image: pacifica/metadata:v0.10.3
     links:
       - metadatadb
       - notifyfrontend
@@ -135,7 +144,7 @@ services:
       PEEWEE_DATABASE_URL: postgres://pacifica:pacifica@metadatadb/pacifica_metadata
 
   policyserver:
-    image: pacifica/policy:v0.6.1
+    image: pacifica/policy:v0.6.6
     links:
       - metadataserver
       - elasticdb
@@ -148,7 +157,7 @@ services:
       STATUS_URL: http://metadataserver:8121/groups
 
   ingestbackend:
-    image: pacifica/ingest-backend:v0.3.4
+    image: pacifica/ingest-backend:v0.3.5
     links:
       - ingestamqp
       - ingestdb
@@ -168,7 +177,7 @@ services:
       ARCHIVEINTERFACE_URL: http://archiveinterface:8080
 
   ingestfrontend:
-    image: pacifica/ingest-frontend:v0.3.4
+    image: pacifica/ingest-frontend:v0.3.5
     ports:
       - 8066:8066
     links:
@@ -219,19 +228,32 @@ services:
       - notifydb
       - notifyamqp
       - policyserver
+      - jupyter
     environment:
       PEEWEE_DATABASE_URL: postgres://notify:notify@notifydb/pacifica_notify
       BROKER_URL: pyamqp://guest:guest@notifyamqp:5672//
       POLICY_URL: http://policyserver:8181
 
+  mgmt:
+    build:
+      context: docker/mgmt
+    links:
+      - metadataserver
+    ports:
+      - 8889:80
+
   jupyter:
     image: jupyter/scipy-notebook
+    links:
+      - jupyterdb
+      - jupyteramqp
     ports:
       - 8888:8888
     volumes:
       - jupyterdata:/home/jovyan
+
   jupytervolume:
     build:
-      context: jupyter
+      context: docker/jupyter
     volumes:
       - jupyterdata:/srv
