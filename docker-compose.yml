@@ -76,14 +76,14 @@ services:
       - 9300:9300
 
   archiveinterface:
-    image: pacifica/archiveinterface:v0.2.0
+    image: pacifica/archiveinterface:v0.2.1
     ports:
       - 8080:8080
     volumes:
       - archivedata:/srv
 
   cartbackend:
-    image: pacifica/cartd-backend:v0.3.7
+    image: pacifica/cartd-backend:v0.3.11
     links:
       - cartamqp
       - cartdb
@@ -98,7 +98,7 @@ services:
       ARCHIVE_INTERFACE_URL: http://archiveinterface:8080/
 
   cartfrontend:
-    image: pacifica/cartd-frontend:v0.3.7
+    image: pacifica/cartd-frontend:v0.3.11
     ports:
       - 8081:8081
     links:
@@ -115,7 +115,7 @@ services:
       ARCHIVE_INTERFACE_URL: http://archiveinterface:8080/
 
   uniqueid:
-    image: pacifica/uniqueid:v0.3.3
+    image: pacifica/uniqueid:v0.3.4
     links:
       - uniqueiddb
     ports:
@@ -124,7 +124,7 @@ services:
       PEEWEE_DATABASE_URL: postgres://uniqueid:uniqueid@uniqueiddb/pacifica_uniqueid
 
   metadataserver:
-    image: pacifica/metadata:v0.8.0
+    image: pacifica/metadata:v0.10.1
     links:
       - metadatadb
       - notifyfrontend
@@ -135,7 +135,7 @@ services:
       PEEWEE_DATABASE_URL: postgres://pacifica:pacifica@metadatadb/pacifica_metadata
 
   policyserver:
-    image: pacifica/policy:v0.5.0
+    image: pacifica/policy:v0.6.1
     links:
       - metadataserver
       - elasticdb
@@ -148,7 +148,7 @@ services:
       STATUS_URL: http://metadataserver:8121/groups
 
   ingestbackend:
-    image: pacifica/ingest-backend:v0.3.3
+    image: pacifica/ingest-backend:v0.3.4
     links:
       - ingestamqp
       - ingestdb
@@ -168,7 +168,7 @@ services:
       ARCHIVEINTERFACE_URL: http://archiveinterface:8080
 
   ingestfrontend:
-    image: pacifica/ingest-frontend:v0.3.3
+    image: pacifica/ingest-frontend:v0.3.4
     ports:
       - 8066:8066
     links:
@@ -190,7 +190,7 @@ services:
       ARCHIVEINTERFACE_URL: http://archiveinterface:8080
 
   proxyserver:
-    image: pacifica/proxy:v0.1.2
+    image: pacifica/proxy:v0.1.3
     links:
       - metadataserver
       - archiveinterface
@@ -202,7 +202,7 @@ services:
       ARCHIVEINTERFACE_URL: http://archiveinterface:8080
 
   notifyfrontend:
-    image: pacifica/notifications-frontend:v0.3.2
+    image: pacifica/notifications-frontend:v0.4.1
     links:
       - notifydb
       - notifyamqp
@@ -214,7 +214,7 @@ services:
       POLICY_URL: http://policyserver:8181
 
   notifybackend:
-    image: pacifica/notifications-backend:v0.3.2
+    image: pacifica/notifications-backend:v0.4.1
     links:
       - notifydb
       - notifyamqp
@@ -231,6 +231,7 @@ services:
     volumes:
       - jupyterdata:/home/jovyan
   jupytervolume:
-    image: docker.io/dmlb2000/jupytervolume
+    build:
+      context: jupyter
     volumes:
       - jupyterdata:/srv
