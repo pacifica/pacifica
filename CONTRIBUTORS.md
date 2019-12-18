@@ -19,5 +19,6 @@ lists all the contributors to Pacifica in alphabetical order.
  * [Travis Thurber](https://github.com/thurber)
 
 This is not a complete list and needs to be manually maintained.
-If you want to be added feel free to put in an issue referencing
-your contribution.
+If you have made contributions that are not recognized here, please
+submit an issue to the maintainers so that proper credit can be
+noted.
