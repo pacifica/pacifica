@@ -37,3 +37,6 @@
 [submodule "dispatcher"]
 	path = dispatcher
 	url = git@github.com:pacifica/pacifica-dispatcher.git
+[submodule "metadata-mgmt"]
+	path = metadata-mgmt
+	url = git@github.com:pacifica/pacifica-metadata-mgmt.git

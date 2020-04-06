@@ -1,5 +1,5 @@
-from pacifica/metadata:v0.10.3
-from pacifica/cli:v0.4.0
+from pacifica/metadata:v0.12.4
+from pacifica/cli:v0.5.0
 from alpine
 run mkdir /jupyterdata
 workdir /jupyterdata
