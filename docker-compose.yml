@@ -67,6 +67,9 @@ services:
   elasticdb:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
     environment:
+      - node.name=elasticdb
+      - discovery.seed_hosts=elasticdb
+      - cluster.initial_master_nodes=elasticdb
       - bootstrap.memory_lock=true
       - xpack.security.enabled=false
       - xpack.monitoring.enabled=false
@@ -150,7 +153,6 @@ services:
     ports:
       - 8181:8181
     environment:
-      ELASTIC_ENDPOINT: http://elasticdb:9200
       ADMIN_USER_ID: 10
       METADATA_URL: http://metadataserver:8121
       STATUS_URL: http://metadataserver:8121/groups
@@ -246,10 +248,14 @@ services:
       - 8889:80
 
   jupyter:
-    image: jupyter/scipy-notebook
+    build:
+      context: docker/jupyter
+      args:
+        BASE_CONTAINER: jupyter/scipy-notebook:latest
     links:
       - jupyterdb
       - jupyteramqp
+      - elasticdb
     ports:
       - 8888:8888
     volumes:
@@ -257,6 +263,6 @@ services:
 
   jupytervolume:
     build:
-      context: docker/jupyter
+      context: docker/jupytervolume
     volumes:
       - jupyterdata:/srv
