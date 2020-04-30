@@ -10,44 +10,44 @@ volumes:
 
 services:
   ingestamqp:
-    image: rabbitmq:3.7
+    image: rabbitmq:3.8
   cartamqp:
-    image: rabbitmq:3.7
+    image: rabbitmq:3.8
   notifyamqp:
-    image: rabbitmq:3.7
+    image: rabbitmq:3.8
   jupyteramqp:
-    image: rabbitmq:3.7
+    image: rabbitmq:3.8
 
   jupyterdb:
-    image: postgres:9.6
+    image: postgres:10
     environment:
       POSTGRES_DB: jupyter
       POSTGRES_USER: jupyter
       POSTGRES_PASSWORD: jupyter
 
   cartdb:
-    image: postgres:9.6
+    image: postgres:10
     environment:
       POSTGRES_DB: pacifica_cart
       POSTGRES_USER: cartd
       POSTGRES_PASSWORD: cartd
 
   notifydb:
-    image: postgres:9.6
+    image: postgres:10
     environment:
       POSTGRES_DB: pacifica_notify
       POSTGRES_USER: notify
       POSTGRES_PASSWORD: notify
 
   ingestdb:
-    image: postgres:9.6
+    image: postgres:10
     environment:
       POSTGRES_DB: pacifica_ingest
       POSTGRES_USER: ingest
       POSTGRES_PASSWORD: ingest
 
   uniqueiddb:
-    image: postgres:9.6
+    image: postgres:10
     environment:
       POSTGRES_DB: pacifica_uniqueid
       POSTGRES_USER: uniqueid
@@ -56,7 +56,7 @@ services:
       - uniqueiddata:/var/lib/postgresql/data
 
   metadatadb:
-    image: postgres:9.6
+    image: postgres:10
     environment:
       POSTGRES_PASSWORD: pacifica
       POSTGRES_DB: pacifica_metadata
@@ -65,8 +65,11 @@ services:
       - metadata:/var/lib/postgresql/data
 
   elasticdb:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.7.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
     environment:
+      - node.name=elasticdb
+      - discovery.seed_hosts=elasticdb
+      - cluster.initial_master_nodes=elasticdb
       - bootstrap.memory_lock=true
       - xpack.security.enabled=false
       - xpack.monitoring.enabled=false
@@ -85,14 +88,14 @@ services:
       - 9300:9300
 
   archiveinterface:
-    image: pacifica/archiveinterface:v0.2.3
+    image: pacifica/archiveinterface:v0.4.0
     ports:
       - 8080:8080
     volumes:
       - archivedata:/srv
 
   cartbackend:
-    image: pacifica/cartd-backend:v0.3.11
+    image: pacifica/cartd-backend:v0.6.0
     links:
       - cartamqp
       - cartdb
@@ -107,7 +110,7 @@ services:
       ARCHIVE_INTERFACE_URL: http://archiveinterface:8080/
 
   cartfrontend:
-    image: pacifica/cartd-frontend:v0.3.11
+    image: pacifica/cartd-frontend:v0.6.0
     ports:
       - 8081:8081
     links:
@@ -124,7 +127,7 @@ services:
       ARCHIVE_INTERFACE_URL: http://archiveinterface:8080/
 
   uniqueid:
-    image: pacifica/uniqueid:v0.3.4
+    image: pacifica/uniqueid:v0.5.0
     links:
       - uniqueiddb
     ports:
@@ -133,7 +136,7 @@ services:
       PEEWEE_DATABASE_URL: postgres://uniqueid:uniqueid@uniqueiddb/pacifica_uniqueid
 
   metadataserver:
-    image: pacifica/metadata:v0.10.3
+    image: pacifica/metadata:v0.12.4
     links:
       - metadatadb
       - notifyfrontend
@@ -144,20 +147,18 @@ services:
       PEEWEE_DATABASE_URL: postgres://pacifica:pacifica@metadatadb/pacifica_metadata
 
   policyserver:
-    image: pacifica/policy:v0.6.6
+    image: pacifica/policy:v0.8.2
     links:
       - metadataserver
-      - elasticdb
     ports:
       - 8181:8181
     environment:
-      ELASTIC_ENDPOINT: http://elasticdb:9200
       ADMIN_USER_ID: 10
       METADATA_URL: http://metadataserver:8121
       STATUS_URL: http://metadataserver:8121/groups
 
   ingestbackend:
-    image: pacifica/ingest-backend:v0.3.5
+    image: pacifica/ingest-backend:v0.4.0
     links:
       - ingestamqp
       - ingestdb
@@ -177,7 +178,7 @@ services:
       ARCHIVEINTERFACE_URL: http://archiveinterface:8080
 
   ingestfrontend:
-    image: pacifica/ingest-frontend:v0.3.5
+    image: pacifica/ingest-frontend:v0.4.0
     ports:
       - 8066:8066
     links:
@@ -199,7 +200,7 @@ services:
       ARCHIVEINTERFACE_URL: http://archiveinterface:8080
 
   proxyserver:
-    image: pacifica/proxy:v0.1.3
+    image: pacifica/proxy:v0.1.5
     links:
       - metadataserver
       - archiveinterface
@@ -211,7 +212,7 @@ services:
       ARCHIVEINTERFACE_URL: http://archiveinterface:8080
 
   notifyfrontend:
-    image: pacifica/notifications-frontend:v0.4.1
+    image: pacifica/notifications-frontend:v0.5.1
     links:
       - notifydb
       - notifyamqp
@@ -223,7 +224,7 @@ services:
       POLICY_URL: http://policyserver:8181
 
   notifybackend:
-    image: pacifica/notifications-backend:v0.4.1
+    image: pacifica/notifications-backend:v0.5.1
     links:
       - notifydb
       - notifyamqp
@@ -234,19 +235,27 @@ services:
       BROKER_URL: pyamqp://guest:guest@notifyamqp:5672//
       POLICY_URL: http://policyserver:8181
 
+  mgmtservice:
+    image: pacifica/metadata-mgmt:v0.3.0
+
   mgmt:
     build:
-      context: docker/mgmt
+      context: docker/proxy
     links:
       - metadataserver
+      - mgmtservice
     ports:
       - 8889:80
 
   jupyter:
-    image: jupyter/scipy-notebook
+    build:
+      context: docker/jupyter
+      args:
+        BASE_CONTAINER: jupyter/scipy-notebook:latest
     links:
       - jupyterdb
       - jupyteramqp
+      - elasticdb
     ports:
       - 8888:8888
     volumes:
@@ -254,6 +263,6 @@ services:
 
   jupytervolume:
     build:
-      context: docker/jupyter
+      context: docker/jupytervolume
     volumes:
       - jupyterdata:/srv

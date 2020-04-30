@@ -5,8 +5,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- Notifications service v0.4.1 was added by [@markborkum](https://github.com/markborkum)
-- Dispatcher library v0.2.3 was added by [@markborkum](https://github.com/markborkum)
+
+
+## [1.98.0] - 2020-04-30
+### Added
+- Notifications service v0.5.0 was added by [@markborkum](https://github.com/markborkum)
+- Dispatcher library v0.2.4 was added by [@markborkum](https://github.com/markborkum)
+- Metadata Management tool v0.3.0 by [@dmlb2000](https://github.com/dmlb2000)
+
+### Changed
+- Updated Archiveinterface v0.4.0 by [@dmlb2000](https://github.com/dmlb2000)
+- Updated Cartd v0.6.0 by [@dmlb2000](https://github.com/dmlb2000)
+- Updated Commandline Interface v0.5.0 by [@dmlb2000](https://github.com/dmlb2000)
+- Updated Ingest v0.4.0 by [@dmlb2000](https://github.com/dmlb2000)
+- Updated Metadata v0.12.4 by [@dmlb2000](https://github.com/dmlb2000)
+- Updated Policy v0.8.2 by [@dmlb2000](https://github.com/dmlb2000)
+- Updated Proxy v0.1.5 by [@dmlb2000](https://github.com/dmlb2000)
+- Updated Python Downloader v0.4.0 by [@dmlb2000](https://github.com/dmlb2000)
+- Updated Python Uploader v0.4.0 by [@dmlb2000](https://github.com/dmlb2000)
+- Updated UniqueID v0.5.0 by [@dmlb2000](https://github.com/dmlb2000)
 
 ## [1.0.0] - 2019-06-20
 ### Added
