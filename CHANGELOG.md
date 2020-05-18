@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.99.0] - 2020-05-18
+### Changed
+- Archiveinterface service v0.4.1 by [@dmlb2000](https://github.com/dmlb2000)
+- Cartd service v0.7.0 by [@dmlb2000](https://github.com/dmlb2000)
+- Commandline interface v0.5.1 by [@dmlb2000](https://github.com/dmlb2000)
+- Dispatcher library v0.2.5 by [@dmlb2000](https://github.com/dmlb2000)
+- Ingest service v0.4.1 by [@dmlb2000](https://github.com/dmlb2000)
+- Metadata service v0.13.0 by [@dmlb2000](https://github.com/dmlb2000)
+- Metadata Management UI v0.5.1 by [@dmlb2000](https://github.com/dmlb2000)
+- Notifications service v0.5.2 by [@dmlb2000](https://github.com/dmlb2000)
+- Policy service v0.8.3 by [@dmlb2000](https://github.com/dmlb2000)
+- Proxy service v0.1.6 by [@dmlb2000](https://github.com/dmlb2000)
+- Downloader library v0.4.1 by [@dmlb2000](https://github.com/dmlb2000)
+- Uploader library v0.3.1 by [@dmlb2000](https://github.com/dmlb2000)
+- UniqueID service v0.5.1 by [@dmlb2000](https://github.com/dmlb2000)
 
 ## [1.98.0] - 2020-04-30
 ### Added

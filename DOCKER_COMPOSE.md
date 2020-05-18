@@ -79,7 +79,28 @@ Verify the services are running.
 
 ## Test the Interfaces with Jupyter
 
-We include Jupyter notebook with some pre-loaded notebooks
-to verify the services are running. Follow the web link 
+We include a Jupyter container with some pre-loaded notebooks to
+verify the services are running. Follow the web link
 [here](http://localhost:8888) to find the examples and 
 documentation to verify the services are running.
+
+### The Examples Notebook
+
+This notebook shows off the basics of the API for each service
+and how to interface with them from a client code. The system
+loads test data from the notebook to show end-to-end functionality.
+
+### The Notifications Notebook
+
+This notebook shows off the Notifications API and how to subscribe to
+and receive data from the system. The example shows a worker that
+converts all text files to uppercase within a dataset and uploads the
+converted data.
+
+## Inspect the Metadata with React
+
+We also include a React JS based management tool to inspect the
+metadata in the Metadata service. The service is available on
+[localhost:8889](http://localhost:8889) and runs through an NGINX
+proxy. You can watch and manipulate the metadata as you are running
+through the example notebooks.

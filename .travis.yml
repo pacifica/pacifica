@@ -1,7 +1,7 @@
 language: python
 dist: bionic
 python:
-- 3.7
+- 3.8
 env:
   DOCKER_COMPOSE_VERSION: 1.18.0
 git:
