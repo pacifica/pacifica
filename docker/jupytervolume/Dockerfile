@@ -1,4 +1,4 @@
-FROM pacifica/metadata:v0.12.4
+FROM pacifica/metadata:v0.13.0
 FROM pacifica/cli:v0.5.0
 FROM alpine
 RUN mkdir /jupyterdata
