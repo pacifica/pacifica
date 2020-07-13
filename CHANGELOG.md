@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2020-07-13
+ - No Change from v1.99.0
+
 ## [1.99.0] - 2020-05-18
 ### Changed
 - Archiveinterface service v0.4.1 by [@dmlb2000](https://github.com/dmlb2000)
