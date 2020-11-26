@@ -1,42 +1,42 @@
 [submodule "archiveinterface"]
 	path = archiveinterface
-	url = git@github.com:pacifica/pacifica-archiveinterface.git
+	url = ../pacifica-archiveinterface.git
 [submodule "cartd"]
 	path = cartd
-	url = git@github.com:pacifica/pacifica-cartd.git
+	url = ../pacifica-cartd.git
 [submodule "policy"]
 	path = policy
-	url = git@github.com:pacifica/pacifica-policy.git
+	url = ../pacifica-policy.git
 [submodule "ingest"]
 	path = ingest
-	url = git@github.com:pacifica/pacifica-ingest.git
+	url = ../pacifica-ingest.git
 [submodule "docs"]
 	path = docs
-	url = git@github.com:pacifica/pacifica-docs.git
+	url = ../pacifica-docs.git
 [submodule "metadata"]
 	path = metadata
-	url = git@github.com:pacifica/pacifica-metadata.git
+	url = ../pacifica-metadata.git
 [submodule "uniqueid"]
 	path = uniqueid
-	url = git@github.com:pacifica/pacifica-uniqueid.git
+	url = ../pacifica-uniqueid.git
 [submodule "proxy"]
 	path = proxy
-	url = git@github.com:pacifica/pacifica-proxy.git
+	url = ../pacifica-proxy.git
 [submodule "python-uploader"]
 	path = python-uploader
-	url = git@github.com:pacifica/pacifica-python-uploader.git
+	url = ../pacifica-python-uploader.git
 [submodule "notifications"]
 	path = notifications
-	url = git@github.com:pacifica/pacifica-notifications.git
+	url = ../pacifica-notifications.git
 [submodule "python-downloader"]
 	path = python-downloader
-	url = git@github.com:pacifica/pacifica-python-downloader.git
+	url = ../pacifica-python-downloader.git
 [submodule "cli"]
 	path = cli
-	url = git@github.com:pacifica/pacifica-cli.git
+	url = ../pacifica-cli.git
 [submodule "dispatcher"]
 	path = dispatcher
-	url = git@github.com:pacifica/pacifica-dispatcher.git
+	url = ../pacifica-dispatcher.git
 [submodule "metadata-mgmt"]
 	path = metadata-mgmt
-	url = git@github.com:pacifica/pacifica-metadata-mgmt.git
+	url = ../pacifica-metadata-mgmt.git
